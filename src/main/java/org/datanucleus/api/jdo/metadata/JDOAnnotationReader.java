@@ -1015,7 +1015,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                     {
                         dependent = Boolean.valueOf(depStr);
                     }
-                    String valueStrategy = 
+                    String valueStrategy =
                             JDOAnnotationUtils.getIdentityStrategyString((IdGeneratorStrategy) annotationValues.get("valueStrategy"));
                     String customValueStrategy = (String) annotationValues.get("customValueStrategy");
                     if (!StringUtils.isWhitespace(customValueStrategy))
@@ -1023,7 +1023,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         // User has provided an extension strategy
                         valueStrategy = customValueStrategy;
                     }
-                    FieldPersistenceModifier modifier = 
+                    FieldPersistenceModifier modifier =
                             JDOAnnotationUtils.getFieldPersistenceModifier((PersistenceModifier) annotationValues.get("persistenceModifier"));
                     if (modifier == null)
                     {
@@ -1081,7 +1081,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         mmd = new FieldMetaData(cmd, member.getName());
                     }
 
-                    if (disableConversion)
+                    if (disableConversion != null && disableConversion)
                     {
                         mmd.setTypeConverterDisabled();
                     }
@@ -1368,7 +1368,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                             elemmd.addColumn(JDOAnnotationUtils.getColumnMetaDataForColumnAnnotation(elementColumns[j]));
                         }
                     }
-                    if (disableConversion)
+                    if (disableConversion != null && disableConversion)
                     {
                         // TODO Specify this on the element?
                     }
@@ -1379,7 +1379,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         {
                             // Not yet cached an instance of this converter so create one
                             AttributeConverter conv = (AttributeConverter)ClassUtils.newInstance(converterCls, null, null);
-                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls, 
+                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls,
                                 ClassUtils.getCollectionElementType(member.getType(), member.getGenericType()));
                             Class dbType = JDOTypeConverterUtils.getDatastoreTypeForAttributeConverter(converterCls, attrType, null);
 
@@ -1517,7 +1517,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         }
                     }
 
-                    if (disableConversion)
+                    if (disableConversion != null && disableConversion)
                     {
                         // TODO Specify this on the key?
                     }
@@ -1528,7 +1528,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         {
                             // Not yet cached an instance of this converter so create one
                             AttributeConverter conv = (AttributeConverter)ClassUtils.newInstance(converterCls, null, null);
-                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls, 
+                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls,
                                 ClassUtils.getMapKeyType(member.getType(), member.getGenericType()));
                             Class dbType = JDOTypeConverterUtils.getDatastoreTypeForAttributeConverter(converterCls, attrType, null);
 
@@ -1651,7 +1651,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         }
                     }
 
-                    if (disableConversion)
+                    if (disableConversion != null && disableConversion)
                     {
                         // TODO Specify this on the value?
                     }
@@ -1662,7 +1662,7 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                         {
                             // Not yet cached an instance of this converter so create one
                             AttributeConverter conv = (AttributeConverter)ClassUtils.newInstance(converterCls, null, null);
-                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls, 
+                            Class attrType = JDOTypeConverterUtils.getAttributeTypeForAttributeConverter(converterCls,
                                 ClassUtils.getMapValueType(member.getType(), member.getGenericType()));
                             Class dbType = JDOTypeConverterUtils.getDatastoreTypeForAttributeConverter(converterCls, attrType, null);
 
@@ -1801,8 +1801,8 @@ public class JDOAnnotationReader extends AbstractAnnotationReader
                 }
             }
 
-            if (mmd == null && (transactionalField || nonPersistentField || primaryKey || colmds != null || serialised || embeddedOwnerField != null || 
-                embeddedNullIndicatorColumn != null || embeddedNullIndicatorValue != null || embeddedMembers != null || elemmd != null || keymd != null || valuemd != null || 
+            if (mmd == null && (transactionalField || nonPersistentField || primaryKey || colmds != null || serialised || embeddedOwnerField != null ||
+                embeddedNullIndicatorColumn != null || embeddedNullIndicatorValue != null || embeddedMembers != null || elemmd != null || keymd != null || valuemd != null ||
                 ordermd != null || idxmd != null || unimd != null || fkmd != null || joinmd != null || extensions != null || convertConverterCls != null))
             {
                 // @Persistent not supplied but other relevant annotations defined, so add default metadata
